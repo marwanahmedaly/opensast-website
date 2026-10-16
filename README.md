@@ -2,7 +2,15 @@
 
 Public static website for the OpenSAST master’s project at the School of Computing, Queen’s University.
 
-This repository contains the reviewed HTML, CSS, JavaScript, diagrams and selected public research/documentation exports. It does not run the scanner, host a dashboard, accept source uploads or contain model weights or credentials. The analyzer source repository currently requires access; its public URL will be added when supplied.
+This repository contains the reviewed HTML, CSS, JavaScript, diagrams and selected public research/documentation exports. It does not run the scanner, host a dashboard, accept source uploads or contain model weights or credentials. The analyzer source is public at [marwanahmedaly/opensast](https://github.com/marwanahmedaly/opensast). Installation and operation are documented there and in the [website documentation](https://marwanahmedaly.github.io/opensast-website/documentation.html).
+
+## Project resources
+
+- [Research website](https://marwanahmedaly.github.io/opensast-website/)
+- [Source code and installation](https://github.com/marwanahmedaly/opensast)
+- [Final report](https://drive.google.com/file/d/1hhNG6HU7Aa3Z5_3LBudpV9SnH3_EqK_i/view)
+- [Presentation](https://docs.google.com/presentation/d/1rBd8PrAxw52E2QHSfeiTVEfaaAH_tE2KkPV5pimKUz8)
+- [Dashboard walkthrough](https://marwanahmedaly.github.io/opensast-website/docs-dashboard.html)
 
 ## Publishing
 
