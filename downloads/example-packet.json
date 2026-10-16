@@ -1,0 +1,155 @@
+{
+  "candidate": {
+    "candidate_id": "1eeb73bcb13e10846be4952cb3b639b3db25a4f279c34964f580dc2ee427c355",
+    "repository_sha": "7d40f4b7939c901610ed9b85724552d60e7d63fa",
+    "rule_id": "aisast/plan7-cwe89-sql-template-execute-endpoint-suspect",
+    "cwe": 89,
+    "title": "Dynamic SQL text is supplied to an execute-style call; inspect the receiver, value, and callers.",
+    "message": "Dynamic SQL text is supplied to an execute-style call; inspect the receiver, value, and callers.",
+    "primary_location": {
+      "file": "dsvw.py",
+      "line": 30,
+      "column": 36
+    },
+    "source": null,
+    "sink": {
+      "file": "dsvw.py",
+      "line": 30,
+      "column": 36
+    },
+    "path": [],
+    "properties": {
+      "engine": "codeql-custom-35",
+      "provenance": [
+        {
+          "engine": "codeql-custom-35",
+          "rule_id": "aisast/plan7-cwe89-sql-template-execute-endpoint-suspect",
+          "rule_version": null,
+          "severity": "warning",
+          "message": "Dynamic SQL text is supplied to an execute-style call; inspect the receiver, value, and callers.",
+          "cwe_tags": [
+            "external/cwe/cwe-089"
+          ]
+        },
+        {
+          "engine": "codeql-custom-35",
+          "rule_id": "aisast/plan7-cwe89-sql-clause-interpolation-suspect",
+          "rule_version": null,
+          "severity": "warning",
+          "message": "Dynamic SQL-shaped text; verify whether it reaches database execution, whether inserted values are lower-trust, and whether binding/quoting prevents syntax changes. This builder alone is not SQL injection.",
+          "cwe_tags": [
+            "external/cwe/cwe-089"
+          ]
+        },
+        {
+          "engine": "codeql-custom-35",
+          "rule_id": "aisast/plan7-cwe89-pep249-dynamic-endpoint-suspect",
+          "rule_version": null,
+          "severity": "warning",
+          "message": "Dynamic SQL text reaches a modeled database execution API; inspect the value and its callers.",
+          "cwe_tags": [
+            "external/cwe/cwe-089"
+          ]
+        }
+      ],
+      "engines": [
+        "codeql-custom-35"
+      ],
+      "rules": [
+        "aisast/plan7-cwe89-pep249-dynamic-endpoint-suspect",
+        "aisast/plan7-cwe89-sql-clause-interpolation-suspect",
+        "aisast/plan7-cwe89-sql-template-execute-endpoint-suspect"
+      ]
+    },
+    "engines": [
+      "codeql-custom-35"
+    ],
+    "rules": [
+      "aisast/plan7-cwe89-pep249-dynamic-endpoint-suspect",
+      "aisast/plan7-cwe89-sql-clause-interpolation-suspect",
+      "aisast/plan7-cwe89-sql-template-execute-endpoint-suspect"
+    ],
+    "aliases": [
+      "8148b31790d123f58f106821a23db55f3a36b0e5a118a2b16e740b763bbfb35d",
+      "f39087e294bf87f2ce0537db15ec12ef9a9b6d50fc7d468012deca70004aeb74",
+      "d44a021e66334b10e365ec2c47b0c7b48242077409989b648802c164768dbcf4"
+    ]
+  },
+  "evidence": [
+    {
+      "id": "E54be03637e",
+      "file": "dsvw.py",
+      "start_line": 30,
+      "end_line": 30,
+      "code": "  30 |                     cursor.execute(\"SELECT id, username, name, surname FROM users WHERE id=\" + params[\"id\"])",
+      "kind": "context",
+      "truncated": false,
+      "source_end_line": 30
+    },
+    {
+      "id": "E4b0fc34c08",
+      "file": "dsvw.py",
+      "start_line": 24,
+      "end_line": 81,
+      "code": "  24 |     def do_GET(self):\n  25 |         path, query = self.path.split('?', 1) if '?' in self.path else (self.path, \"\")\n  26 |         code, content, params, cursor = http.client.OK, HTML_PREFIX, dict((match.group(\"parameter\"), urllib.parse.unquote(','.join(re.findall(r\"(?:\\A|[?&])%s=([^&]+)\" % match.group(\"parameter\"), query)))) for match in re.finditer(r\"((\\A|[?&])(?P<parameter>[\\w\\[\\]]+)=)([^&]+)\", query)), connection.cursor()\n  27 |         try:\n  28 |             if path == '/':\n  29 |                 if \"id\" in params:\n  30 |                     cursor.execute(\"SELECT id, username, name, surname FROM users WHERE id=\" + params[\"id\"])\n  31 |                     content += \"<div><span>Result(s):</span></div><table><thead><th>id</th><th>username</th><th>name</th><th>surname</th></thead>%s</table>%s\" % (\"\".join(\"<tr>%s</tr>\" % \"\".join(\"<td>%s</td>\" % (\"-\" if _ is None else _) for _ in row) for row in cursor.fetchall()), HTML_POSTFIX)\n  32 |                 elif \"v\" in params:\n  33 |                     content += re.sub(r\"(v<b>)[^<]+(</b>)\", r\"\\g<1>%s\\g<2>\" % params[\"v\"], HTML_POSTFIX)\n  34 |                 elif \"object\" in params:\n  35 |                     content = str(pickle.loads(params[\"object\"].encode()))\n  36 |                 elif \"path\" in params:\n  37 |                     content = (open(os.path.abspath(params[\"path\"]), \"rb\") if not \"://\" in params[\"path\"] else urllib.request.urlopen(params[\"path\"])).read().decode()\n  38 |                 elif \"domain\" in params:\n  39 |                     content = subprocess.run(\"nslookup \" + params[\"domain\"], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, stdin=subprocess.PIPE, text=True).stdout\n  40 |                 elif \"xml\" in params:\n  41 |                     content = lxml.etree.tostring(lxml.etree.parse(io.BytesIO(params[\"xml\"].encode()), lxml.etree.XMLParser(load_dtd=True, resolve_entities=True, no_network=False)), pretty_print=True).decode()\n  42 |                 elif \"name\" in params:\n  43 |                     found = lxml.etree.parse(io.BytesIO(USERS_XML.encode())).xpath(\".//user[name/text()='%s']\" % params[\"name\"])\n  44 |                     content += \"<b>Surname:</b> %s%s\" % (found[-1].find(\"surname\").text if found else \"-\", HTML_POSTFIX)\n  45 |                 elif \"size\" in params:\n  46 |                     start, _ = time.time(), \"<br>\".join(\"#\" * int(params[\"size\"]) for _ in range(int(params[\"size\"])))\n  47 |                     content += \"<b>Time required</b> (to 'resize image' to %dx%d): %.6f seconds%s\" % (int(params[\"size\"]), int(params[\"size\"]), time.time() - start, HTML_POSTFIX)\n  48 |                 elif \"comment\" in params or query == \"comment=\":\n  49 |                     if \"comment\" in params:\n  50 |                         cursor.execute(\"INSERT INTO comments VALUES(NULL, '%s', '%s')\" % (params[\"comment\"], time.ctime()))\n  51 |                         content += \"Thank you for leaving the comment. Please click here <a href=\\\"/?comment=\\\">here</a> to see all comments%s\" % HTML_POSTFIX\n  52 |                     else:\n  53 |                         cursor.execute(\"SELECT id, comment, time FROM comments\")\n  54 |                         content += \"<div><span>Comment(s):</span></div><table><thead><th>id</th><th>comment</th><th>time</th></thead>%s</table>%s\" % (\"\".join(\"<tr>%s</tr>\" % \"\".join(\"<td>%s</td>\" % (\"-\" if _ is None else _) for _ in row) for row in cursor.fetchall()), HTML_POSTFIX)\n  55 |                 elif \"include\" in params:\n  56 |                     backup, sys.stdout, program, envs = sys.stdout, io.StringIO(), (open(params[\"include\"], \"rb\") if not \"://\" in params[\"include\"] else urllib.request.urlopen(params[\"include\"])).read(), {\"DOCUMENT_ROOT\": os.getcwd(), \"HTTP_USER_AGENT\": self.headers.get(\"User-Agent\"), \"REMOTE_ADDR\": self.client_address[0], \"REMOTE_PORT\": self.client_address[1], \"PATH\": path, \"QUERY_STRING\": query}\n  57 |                     exec(program, envs)\n  58 |                     content += sys.stdout.getvalue()\n  59 |                     sys.stdout = backup\n  60 |                 elif \"redir\" in params:\n  61 |                     content = content.replace(\"<head>\", \"<head><meta http-equiv=\\\"refresh\\\" content=\\\"0; url=%s\\\"/>\" % params[\"redir\"])\n  62 |                 if HTML_PREFIX in content and HTML_POSTFIX not in content:\n  63 |                     content += \"<div><span>Attacks:</span></div>\\n<ul>%s\\n</ul>\\n\" % (\"\".join(\"\\n<li%s>%s - <a href=\\\"%s\\\">vulnerable</a>|<a href=\\\"%s\\\">exploit</a>|<a href=\\\"%s\\\" target=\\\"_blank\\\">info</a></li>\" % (\" class=\\\"disabled\\\" title=\\\"module 'python-lxml' not installed\\\"\" if (\"lxml.etree\" not in sys.modules and any(_ in case[0].upper() for _ in (\"XML\", \"XPATH\"))) else \"\", case[0], case[1], case[2], case[3]) for case in CASES)).replace(\"<a href=\\\"None\\\">vulnerable</a>|\", \"<b>-</b>|\")\n  64 |             elif path == \"/users.json\":\n  65 |                 content = \"%s%s%s\" % (\"\" if not \"callback\" in params else \"%s(\" % params[\"callback\"], json.dumps(dict((_.findtext(\"username\"), _.findtext(\"surname\")) for _ in xml.etree.ElementTree.fromstring(USERS_XML).findall(\"user\"))), \"\" if not \"callback\" in params else \")\")\n  66 |             elif path == \"/login\":\n  67 |                 cursor.execute(\"SELECT * FROM users WHERE username='\" + re.sub(r\"[^\\w]\", \"\", params.get(\"username\", \"\")) + \"' AND password='\" + params.get(\"password\", \"\") + \"'\")\n  68 |                 content += \"Welcome <b>%s</b><meta http-equiv=\\\"Set-Cookie\\\" content=\\\"SESSIONID=%s; path=/\\\"><meta http-equiv=\\\"refresh\\\" content=\\\"1; url=/\\\"/>\" % (re.sub(r\"[^\\w]\", \"\", params.get(\"username\", \"\")), \"\".join(random.sample(string.ascii_letters + string.digits, 20))) if cursor.fetchall() else \"The username and/or password is incorrect<meta http-equiv=\\\"Set-Cookie\\\" content=\\\"SESSIONID=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT\\\">\"\n  69 |             else:\n  70 |                 code = http.client.NOT_FOUND\n  71 |         except Exception as ex:\n  72 |             content = ex.output if isinstance(ex, subprocess.CalledProcessError) else traceback.format_exc()\n  73 |             code = http.client.INTERNAL_SERVER_ERROR\n  74 |         finally:\n  75 |             self.send_response(code)\n  76 |             self.send_header(\"Connection\", \"close\")\n  77 |             self.send_header(\"X-XSS-Protection\", \"0\")\n  78 |             self.send_header(\"Content-Type\", \"%s%s\" % (\"text/html\" if content.startswith(\"<!DOCTYPE html>\") else \"text/plain\", \"; charset=%s\" % params.get(\"charset\", \"utf8\")))\n  79 |             self.end_headers()\n  80 |             self.wfile.write((\"%s%s\" % (content, HTML_POSTFIX if HTML_PREFIX in content and GITHUB not in content else \"\")).encode())\n  81 |             self.wfile.flush()",
+      "kind": "sink",
+      "truncated": false,
+      "source_end_line": 81
+    },
+    {
+      "id": "E539b4beb8c",
+      "file": "dsvw.py",
+      "start_line": 2,
+      "end_line": 2,
+      "code": "   2 | import html, http.client, http.server, io, json, os, pickle, random, re, socket, socketserver, sqlite3, string, sys, subprocess, time, traceback, urllib.parse, urllib.request, xml.etree.ElementTree  # Python 3 required",
+      "kind": "relation",
+      "truncated": false,
+      "source_end_line": 2
+    },
+    {
+      "id": "Eb4707edf63",
+      "file": "dsvw.py",
+      "start_line": 23,
+      "end_line": 23,
+      "code": "  23 | class ReqHandler(http.server.BaseHTTPRequestHandler):",
+      "kind": "relation",
+      "truncated": false,
+      "source_end_line": 23
+    }
+  ],
+  "profile": "CWE-89",
+  "prompt_version": "v1",
+  "context_truncated": false,
+  "incomplete_evidence_blocks": 0,
+  "context_resolution": [
+    {
+      "kind": "import_binding",
+      "target": "do_GET",
+      "status": "located",
+      "file": "dsvw.py",
+      "start_line": 2,
+      "end_line": 2,
+      "certainty": "syntactic_possible",
+      "included": true,
+      "evidence_ids": [
+        "E539b4beb8c"
+      ]
+    },
+    {
+      "kind": "http_handler_binding",
+      "target": "ReqHandler",
+      "status": "located",
+      "file": "dsvw.py",
+      "start_line": 23,
+      "end_line": 23,
+      "certainty": "documented_api_binding",
+      "included": true,
+      "evidence_ids": [
+        "Eb4707edf63"
+      ]
+    }
+  ],
+  "framework_facts": [
+    "For a subclass of http.server.BaseHTTPRequestHandler, self.path contains the client HTTP request path, including the query if present. Inspect any supplied overrides or reassignment before the sink."
+  ]
+}

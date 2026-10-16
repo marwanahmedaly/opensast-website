@@ -1,0 +1,181 @@
+{
+  "updated": "2026-10-16",
+  "panel_metrics": [
+    {
+      "cohort": "development",
+      "scan": "31-project repository evaluation",
+      "source_report": "runs/stock-vs-current-qwen-audit-20261004/report.md",
+      "unit": "resolved operation label",
+      "approach": "Stock CodeQL",
+      "tp": 43,
+      "tn": 91,
+      "fp": 1,
+      "fn": 70,
+      "precision_percent": 97.7,
+      "recall_percent": 38.1,
+      "f1_percent": 54.8
+    },
+    {
+      "cohort": "development",
+      "scan": "31-project repository evaluation",
+      "source_report": "runs/stock-vs-current-qwen-audit-20261004/report.md",
+      "unit": "resolved operation label",
+      "approach": "Expanded suspects",
+      "tp": 112,
+      "tn": 78,
+      "fp": 14,
+      "fn": 1,
+      "precision_percent": 88.9,
+      "recall_percent": 99.1,
+      "f1_percent": 93.7
+    },
+    {
+      "cohort": "development",
+      "scan": "31-project repository evaluation",
+      "source_report": "runs/stock-vs-current-qwen-audit-20261004/report.md",
+      "unit": "resolved operation label",
+      "approach": "OpenSAST",
+      "tp": 105,
+      "tn": 89,
+      "fp": 3,
+      "fn": 8,
+      "precision_percent": 97.2,
+      "recall_percent": 92.9,
+      "f1_percent": 95.0
+    },
+    {
+      "cohort": "seven_rescan",
+      "scan": "7-project repository evaluation",
+      "source_report": "reports/current-seven-20261008/report.md",
+      "unit": "resolved operation label",
+      "approach": "Stock CodeQL",
+      "tp": 2,
+      "tn": 4,
+      "fp": 3,
+      "fn": 5,
+      "precision_percent": 40.0,
+      "recall_percent": 28.6,
+      "f1_percent": 33.3
+    },
+    {
+      "cohort": "seven_rescan",
+      "scan": "7-project repository evaluation",
+      "source_report": "reports/current-seven-20261008/report.md",
+      "unit": "resolved operation label",
+      "approach": "Expanded suspects",
+      "tp": 6,
+      "tn": 2,
+      "fp": 5,
+      "fn": 1,
+      "precision_percent": 54.5,
+      "recall_percent": 85.7,
+      "f1_percent": 66.7
+    },
+    {
+      "cohort": "seven_rescan",
+      "scan": "7-project repository evaluation",
+      "source_report": "reports/current-seven-20261008/report.md",
+      "unit": "resolved operation label",
+      "approach": "OpenSAST",
+      "tp": 4,
+      "tn": 6,
+      "fp": 1,
+      "fn": 3,
+      "precision_percent": 80.0,
+      "recall_percent": 57.1,
+      "f1_percent": 66.7
+    },
+    {
+      "cohort": "owasp",
+      "scan": "OWASP Python benchmark evaluation",
+      "source_report": "reports/owasp-current-20261008/report.md",
+      "unit": "official benchmark test case",
+      "approach": "Stock CodeQL",
+      "tp": 56,
+      "tn": 105,
+      "fp": 74,
+      "fn": 58,
+      "precision_percent": 43.1,
+      "recall_percent": 49.1,
+      "f1_percent": 45.9
+    },
+    {
+      "cohort": "owasp",
+      "scan": "OWASP Python benchmark evaluation",
+      "source_report": "reports/owasp-current-20261008/report.md",
+      "unit": "official benchmark test case",
+      "approach": "Expanded suspects",
+      "tp": 83,
+      "tn": 62,
+      "fp": 117,
+      "fn": 31,
+      "precision_percent": 41.5,
+      "recall_percent": 72.8,
+      "f1_percent": 52.9
+    },
+    {
+      "cohort": "owasp",
+      "scan": "OWASP Python benchmark evaluation",
+      "source_report": "reports/owasp-current-20261008/report.md",
+      "unit": "official benchmark test case",
+      "approach": "OpenSAST",
+      "tp": 83,
+      "tn": 111,
+      "fp": 68,
+      "fn": 31,
+      "precision_percent": 55.0,
+      "recall_percent": 72.8,
+      "f1_percent": 62.6
+    }
+  ],
+  "scans": {
+    "development": {
+      "title": "31-project repository evaluation",
+      "scope": "Historical configuration. 113 vulnerable and 92 negative operation labels; two unknown labels excluded. Projects were used during development.",
+      "source_report": "runs/stock-vs-current-qwen-audit-20261004/report.md"
+    },
+    "seven_rescan": {
+      "title": "7-project repository evaluation",
+      "scope": "Current evaluated configuration. October 8. Seven vulnerable and seven repaired operations across six of seven projects; seventh exploratory. Projects were previously investigated, so this is not an unseen-project test.",
+      "source_report": "reports/current-seven-20261008/report.md"
+    },
+    "owasp": {
+      "title": "OWASP Python benchmark evaluation",
+      "scope": "Current evaluated configuration. All 293 official cases for our four CWEs: 114 vulnerable and 179 negative. Synthetic benchmark, previously exposed during development.",
+      "source_report": "reports/owasp-current-20261008/report.md"
+    }
+  },
+  "repository_wide_recall_and_f1": null,
+  "limitation": "Labeled-case scores and reviewed-alert precision use different units. Non-alert repository truth is incomplete. All presented sets have development/investigation exposure.",
+  "alert_review": {
+    "development": {
+      "stock": {
+        "true": 56,
+        "false": 14,
+        "unknown": 3
+      },
+      "opensast_qwen": {
+        "true": 137,
+        "false": 84,
+        "unknown": 12
+      }
+    },
+    "seven_rescan": {
+      "opensast_qwen": {
+        "true": 22,
+        "false": 93,
+        "unknown": 16
+      }
+    }
+  },
+  "runtime": {
+    "seven_rescan": {
+      "seconds": 87940,
+      "boundary": "calendar interval including interruption/recovery; existing databases"
+    },
+    "owasp": {
+      "seconds": 8645,
+      "boundary": "calendar interval including fresh extraction and interruption/resume; final scoring excluded"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "candidate_id": "1eeb73bcb13e10846be4952cb3b639b3db25a4f279c34964f580dc2ee427c355",
+  "cwe": 89,
+  "verdict": "VULNERABLE",
+  "source_evidence": [
+    "E4b0fc34c08"
+  ],
+  "sink_evidence": [
+    "E54be03637e"
+  ],
+  "sanitizer_evidence": [],
+  "explanation": "User input 'params[\"id\"]' is concatenated directly into SQL query string without parameterization.",
+  "missing_symbols": []
+}

@@ -1,0 +1,56 @@
+{
+  "key": "realvuln-dsvw--1eeb73bcb13e10846be4952cb3b639b3db25a4f279c34964f580dc2ee427c355",
+  "repository": "realvuln-dsvw",
+  "project": "realvuln-dsvw",
+  "cohort": "benchmark_development",
+  "repository_sha": "7d40f4b7939c901610ed9b85724552d60e7d63fa",
+  "candidate_id": "1eeb73bcb13e10846be4952cb3b639b3db25a4f279c34964f580dc2ee427c355",
+  "cwe": 89,
+  "location": {
+    "file": "dsvw.py",
+    "line": 30,
+    "column": 36
+  },
+  "model": "qwen3-coder",
+  "final_verdict": "VULNERABLE",
+  "validation_errors": [],
+  "usage": {
+    "completion_tokens": 163,
+    "prompt_tokens": 3597,
+    "total_tokens": 3760,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "started_at": "2026-10-03T21:03:29.768302+00:00",
+  "completed_at": "2026-10-03T21:04:16.722420+00:00",
+  "seconds": 46.95414477400482,
+  "attempts": [
+    {
+      "attempt": 1,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 163,
+        "prompt_tokens": 3597,
+        "total_tokens": 3760,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "status": "complete",
+      "seconds": 46.93927440047264
+    }
+  ],
+  "packet_sha256": "f123c5ac89329d3f62c4bec1a281fd9c171168d51c53f014749f1f11d797a7c8",
+  "messages_sha256": "1a6529d48b01c417627ea7c531fedeba32c002f43fbd309430654e36f9e1924b",
+  "context_truncated": false,
+  "evidence_blocks": 4,
+  "source_run": "runs/suspect-v2-evaluation-20261003",
+  "response_is_saved_model_output": true,
+  "copied_artifacts_sha256": {
+    "dsvw-example-messages.json": "1a6529d48b01c417627ea7c531fedeba32c002f43fbd309430654e36f9e1924b",
+    "dsvw-example-packet.json": "f123c5ac89329d3f62c4bec1a281fd9c171168d51c53f014749f1f11d797a7c8",
+    "dsvw-example-response.json": "bf95cc21375ac45acdc06ba6ad0d73fa02631fe0d305d09b28dd662efe7ed79a"
+  }
+}

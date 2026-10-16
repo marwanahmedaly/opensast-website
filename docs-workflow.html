@@ -1,0 +1,126 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Copy the GitHub Actions workflow · Documentation · OpenSAST Research</title><meta name="description" content="OpenSAST research: local AI-assisted Python static analysis, its architecture, experiments, evaluation and limitations."><meta name="theme-color" content="#161616"><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"%3E%3Crect width="32" height="32" rx="4" fill="%23161616"/%3E%3Cpath d="M12 9L5 16l7 7m8-14l7 7-7 7" stroke="%2342d9e8" stroke-width="2" fill="none"/%3E%3C/svg%3E"><link rel="stylesheet" href="assets/site.css"><script src="assets/site.js" defer></script></head><body><a class="skip" href="#main">Skip to content</a><header><div class="wrap header-inner"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">&lt;/&gt;</span>OpenSAST<small>Research project</small></a><button class="menu" data-menu aria-controls="navigation" aria-expanded="false">Menu</button><nav id="navigation" aria-label="Main navigation"><a href="index.html">Overview</a><a href="journey.html">Research journey</a><a href="evaluation.html">Evaluation</a><a href="documentation.html" aria-current="page">Documentation</a></nav></div></header><main id="main"><div class="wrap docs-layout"><aside class="docs-sidebar"><details open data-doc-guides><summary>Choose a guide</summary><label for="doc-search">Find a guide</label><input id="doc-search" type="search" placeholder="e.g. worker, CI, backups"><p id="doc-search-status" class="meta" role="status" aria-live="polite"></p><nav aria-label="Documentation"><p class="docs-group">Start here</p><a href="documentation.html" data-doc-topic="your first scan follow seven steps from installation to your first reviewed scan. all instructions are on this page. start with one python project step 1 — prepare the scan machine step 2 — get and install opensast step 3 — answer the setup questions step 4 — check that services are ready step 5 — register the python project step 6 — run the first scan step 7 — open and review the results next — rescan after an edit --no-browser --reconfigure --username --version --wait opensast doctor opensast init opensast login opensast scan opensast setup opensast start opensast status">Your first scan</a><a href="docs-installation.html" data-doc-topic="installation requirements, guided setup, offline installation and updates. step 1 — check requirements step 2 — install and choose inference install inside an offline network update, restart and retain data --backend --codeql --gguf --llama-server --offline --query-search-path --reconfigure --source --wheel --wheelhouse opensast doctor opensast restart opensast setup">Installation</a><p class="docs-group">Run and review</p><a href="docs-scanning.html" data-doc-topic="projects and scans register a checkout, start its worker, and run full or incremental scans. step 1 — register a python project step 2 — make sure a worker is online step 3 — run and inspect a scan what goes into a scan --full --import --name --no-browser --no-worker --project --username --wait --workspace opensast cancel opensast init opensast login opensast scan opensast start opensast status opensast worker opensast worker-token opensast workspace">Projects and scans</a><a href="docs-results.html" data-doc-topic="results and human review understand model verdicts, evidence, review states and json exports. read the model decision review the code and its conditions record human review separately export and interpret counts scan command exit status --note --output --wait opensast export opensast findings opensast review">Results and human review</a><a href="docs-incremental.html" data-doc-topic="incremental scanning what changes trigger analysis, when decisions are reused, and when to force a full scan. three scan situations why an unchanged file may need verification force or recover a baseline --full --wait opensast scan">Incremental scanning</a><p class="docs-group">Team and company setup</p><a href="docs-teams.html" data-doc-topic="accounts and workspaces separate team access, invite users, and manage credentials. choose a workspace boundary create a workspace and add members sign in and change your password rotate a project worker credential --import --new-user --role --server --username opensast audit opensast login opensast logout opensast members opensast password opensast restart opensast worker-token opensast workspace">Accounts and workspaces</a><a href="docs-configuration.html" data-doc-topic="inference and configuration use local weights or an internal endpoint, and manage saved engine settings. set up the analysis engines check endpoint compatibility context and output budgets run discovery without verification useful setup controls --allow-model-host --backend --codeql --context-window --dashboard-port --endpoint --gguf --llama-server --max-tokens --model --model-port --model-revision --no-start --non-interactive --password-file --query-search-path --reconfigure --suspect-only --yes opensast doctor opensast setup opensast worker">Inference and configuration</a><a href="docs-ci.html" data-doc-topic="github actions and ci run trusted local scanning with git baselines and an optional new-alert gate. run an independent ci scan understand the comparison configure github actions interpret reports and exit codes --base --codeql --endpoint --fail-on --full --model --model-revision --output --project-key --query-search-path --state opensast ci">GitHub Actions and CI</a><a href="docs-workflow.html" data-doc-topic="copy the github actions workflow copy the complete example into your repository; no template download is needed. step 1 — prepare the runner step 2 — create the workflow file step 3 — replace the example settings step 4 — commit and inspect a run advanced — composite action source --allow-model-host --base --codeql --endpoint --fail-on --model --model-revision --output --project-key --query-search-path --state opensast
+          project-key opensast
+  project-key" aria-current="page">Copy the GitHub Actions workflow</a><a href="docs-deployment.html" data-doc-topic="deployment and maintenance headless access, company hosting, private storage, backups and service operation. access a headless machine expose an internal company dashboard start and stop services locate and back up data --host --no-browser --port --public-url --trusted-origin opensast doctor opensast init opensast restart opensast serve opensast start opensast stop">Deployment and maintenance</a><p class="docs-group">Help and reference</p><a href="docs-troubleshooting.html" data-doc-topic="troubleshooting find the failing stage before changing configuration or resubmitting a scan. start with readiness common symptoms recover a failed job prepare a useful issue report opensast doctor opensast status">Troubleshooting</a><a href="docs-reference.html" data-doc-topic="command reference product commands and common options, with a short glossary. every product command worker and ci engine options useful terms read the full references online --allow-model-host --base --codeql --context-window --data --endpoint --fail-on --full --help --host --import --job --max-tokens --model --model-revision --name --new-user --no-browser --no-start --no-worker --non-interactive --note --offline --once --output --port --project --project-key --public-url --query-search-path --reconfigure --role --server --state --suspect-only --trusted-origin --username --wait --workspace --yes opensast --help">Command reference</a><a href="docs-installation-reference.html" data-doc-topic="installation details complete installation reference, readable here without downloading a file. how to use this reference about this reference current availability requirements and wizard after installation existing internal endpoint offline and internal distribution storage, updates and debugging primary references optional offline copy --allow-model-host --backend --bin-dir --codeql --endpoint --gguf --llama-server --model --model-revision --no-browser --no-start --no-worker --non-interactive --offline --password-file --prefix --query-search-path --reconfigure --ref --suspect-only --username --wheel --wheelhouse --yes opensast ci opensast doctor opensast init opensast login opensast restart opensast scan opensast setup opensast start opensast stop opensast worker">Installation details</a><a href="docs-product-reference.html" data-doc-topic="product details complete cli and dashboard reference, including manual setup and recovery. how to use this reference about this reference what is implemented guided installation (new 0.2.0 implementation) manual installation from the source checkout register a checkout start the local project worker run and review scans incremental behavior and current limits company installation team management storage, diagnostics and recovery validation and next checks optional offline copy --allow-model-host --codeql --data --endpoint --full --host --import --job --model --model-revision --new-user --no-worker --note --once --output --port --project --public-url --query-search-path --role --server --trusted-origin --username --wait --workspace opensast audit opensast bootstrap opensast cancel opensast ci opensast dashboard opensast doctor opensast export opensast findings opensast init opensast login opensast members opensast password opensast review opensast scan opensast serve opensast status opensast worker opensast worker-token opensast workspace">Product details</a><a href="docs-ci-reference.html" data-doc-topic="ci details complete git-aware scanning and github actions reference. how to use this reference what this implementation does local invocation report and gate behavior company-local github actions current limits and validation status optional offline copy --base --codeql --endpoint --fail-on --full --model --model-revision --output --project-key --query-search-path --state opensast ci">CI details</a><a href="resources.html">Research resources ↗</a></nav></details></aside><article class="docs-article"><p class="eyebrow">OpenSAST / User documentation</p><h1>Copy the GitHub Actions workflow</h1><p class="lead">Copy the complete example into your repository; no template download is needed.</p><p>New to OpenSAST? <a href="documentation.html">Follow the seven-step first scan guide</a>. These pages explain the details when you need them.</p><nav class="docs-toc" aria-label="On this page"><strong>On this page</strong><a href="#prepare">Step 1 — Prepare the runner</a><a href="#workflow">Step 2 — Create the workflow file</a><a href="#customize">Step 3 — Replace the example settings</a><a href="#run">Step 4 — Commit and inspect a run</a><a href="#action">Advanced — Composite action source</a></nav><section class="doc-section" id="prepare"><h2>Step 1 — Prepare the runner</h2><p>Use an isolated company self-hosted Linux runner with the trusted OpenSAST executable, CodeQL packs and local/internal model already provisioned. Keep scanner installation and private state outside the target checkout. The <a href="docs-ci.html#action">CI setup guide</a> explains access and version boundaries.</p></section><section class="doc-section" id="workflow"><h2>Step 2 — Create the workflow file</h2><p>In the <strong>Python repository you will scan</strong>, create <code>.github/workflows/opensast.yml</code>. Copy this complete example, then change the settings in step 3.</p><div class="doc-code"><pre><code># Copy to .github/workflows/opensast.yml in the target Python repository.
+# Provision the trusted CLI, CodeQL packs and local model on an isolated company
+# runner first. Do not install the scanned repository or run its setup scripts.
+name: OpenSAST
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: opensast-${{ github.repository }}-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  scan:
+    # This example deliberately excludes fork PRs from the internal runner.
+    if: github.event_name != &#x27;pull_request&#x27; || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [self-hosted, linux, opensast]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Scan with trusted OpenSAST
+        # Reviewed immutable v0.1.0 release commit.
+        # For a private OpenSAST repository, configure organization action access.
+        uses: marwanahmedaly/ai_powered_sast/.github/actions/opensast@7a90900ddf6aee9d9047b4d2d88eaa1f41b9c454
+        with:
+          executable: /opt/opensast/bin/opensast
+          project-key: ${{ github.repository }}
+          base: ${{ github.event.pull_request.base.sha || &#x27;&#x27; }}
+          state: /var/lib/opensast/ci
+          output: ${{ runner.temp }}/opensast-${{ github.run_id }}-${{ github.run_attempt }}/report.json
+          codeql: /opt/codeql/codeql
+          query-search-path: /opt/codeql/packages
+          endpoint: http://127.0.0.1:8000/v1
+          model: qwen3-coder
+          model-revision: REPLACE_WITH_WEIGHT_SHA256
+          fail-on: new
+      # No actions/cache or upload-artifact: full source/evidence remain internal.</code></pre><button type="button" data-copy-code hidden>Copy</button></div></section><section class="doc-section" id="customize"><h2>Step 3 — Replace the example settings</h2><div class="table-scroll"><table><thead><tr><th scope="col">Setting</th><th scope="col">What to enter</th></tr></thead><tbody><tr><td>Runner labels</td><td>Labels matching your approved company runner: <code>self-hosted</code>, <code>linux</code>, <code>opensast</code> in this example.</td></tr><tr><td>Executable and CodeQL paths</td><td>Actual trusted installation paths on the runner; do not point to code supplied by the scanned pull request.</td></tr><tr><td>State / output</td><td>Private directories outside the checkout. Keep state persistent for reuse.</td></tr><tr><td>Endpoint / model</td><td>Your local or internal inference URL and the exact served model name.</td></tr><tr><td>Model revision</td><td>Replace <code>REPLACE_WITH_WEIGHT_SHA256</code> with the immutable digest of the actual served weights.</td></tr><tr><td>Action revision</td><td>The example pins a historically reviewed 0.1.0 commit. Review your chosen scanner/action combination and configure private repository access if required.</td></tr></tbody></table></div><p>The new 0.2.0 installer is not validated by the historical action checks. Do not substitute an unreviewed scanner revision merely to make the workflow run.</p></section><section class="doc-section" id="run"><h2>Step 4 — Commit and inspect a run</h2><p>Commit the workflow and use a permitted same-repository pull request, a push to <code>main</code>, or <strong>Run workflow</strong> in GitHub Actions. An approved runner must be online. The first PR comparison scans the base and head snapshots.</p><p><strong>Expected result:</strong> the OpenSAST job completes with a check status; the detailed JSON report is stored at the configured runner-local path. The template does not upload that report to GitHub or the dashboard.</p><p><strong>If it fails:</strong> check runner labels, action access, paths, model readiness and the pinned weight revision. Exit 1 means an execution failure or alert gate failure; exit 2 means incomplete verification. Read <a href="docs-ci.html#gate">report and gate behavior</a>.</p></section><section class="doc-section" id="action"><h2>Advanced — Composite action source</h2><p>The following is the current checkout’s composite action source. The workflow above pins a historical commit; this displayed working-copy source is not proof of the bytes at that historical revision.</p><div class="doc-code"><pre><code>name: OpenSAST local-first scan
+description: Full Python static analysis with cached verification and Git baseline comparison on a company runner
+inputs:
+  executable:
+    description: Absolute path to the preinstalled trusted OpenSAST executable
+    default: /opt/opensast/bin/opensast
+  project-key:
+    description: Stable repository identifier
+    required: true
+  base:
+    description: Optional PR target commit; its merge-base is the comparison baseline
+    default: &#x27;&#x27;
+  state:
+    description: Persistent private cache outside the checked-out repository
+    required: true
+  output:
+    description: Private JSON report outside the checkout
+    required: true
+  codeql:
+    description: Absolute path to preinstalled CodeQL
+    required: true
+  query-search-path:
+    description: Preinstalled CodeQL pack directory
+    required: true
+  endpoint:
+    description: Internal OpenAI-compatible inference endpoint
+    required: true
+  model:
+    description: Model name
+    required: true
+  model-revision:
+    description: Immutable model revision or weights digest
+    required: true
+  allow-model-host:
+    description: Optional explicitly allowed internal inference hostname
+    default: &#x27;&#x27;
+  fail-on:
+    description: &#x27;new (fail on new alerts) or none (report only); unresolved results always fail&#x27;
+    default: new
+outputs:
+  report:
+    description: Path to the full report on the company runner
+    value: ${{ steps.scan.outputs.report }}
+  exit-code:
+    description: &#x27;0 completed, 1 new alerts or execution failure, 2 incomplete verification&#x27;
+    value: ${{ steps.scan.outputs.exit-code }}
+runs:
+  using: composite
+  steps:
+    - id: scan
+      shell: bash
+      env:
+        OPENSAST_EXECUTABLE: ${{ inputs.executable }}
+        OPENSAST_PROJECT: ${{ inputs.project-key }}
+        OPENSAST_BASE: ${{ inputs.base }}
+        OPENSAST_STATE: ${{ inputs.state }}
+        OPENSAST_OUTPUT: ${{ inputs.output }}
+        OPENSAST_CODEQL: ${{ inputs.codeql }}
+        OPENSAST_PACKS: ${{ inputs.query-search-path }}
+        OPENSAST_ENDPOINT: ${{ inputs.endpoint }}
+        OPENSAST_MODEL: ${{ inputs.model }}
+        OPENSAST_REVISION: ${{ inputs.model-revision }}
+        OPENSAST_MODEL_HOST: ${{ inputs.allow-model-host }}
+        OPENSAST_FAIL_ON: ${{ inputs.fail-on }}
+      run: |
+        [[ &quot;$OPENSAST_EXECUTABLE&quot; = /* ]] || { echo &quot;OpenSAST executable must be an absolute trusted path&quot; &gt;&amp;2; exit 1; }
+        arguments=(ci --project-key &quot;$OPENSAST_PROJECT&quot; --state &quot;$OPENSAST_STATE&quot;
+          --output &quot;$OPENSAST_OUTPUT&quot; --codeql &quot;$OPENSAST_CODEQL&quot;
+          --query-search-path &quot;$OPENSAST_PACKS&quot; --endpoint &quot;$OPENSAST_ENDPOINT&quot;
+          --model &quot;$OPENSAST_MODEL&quot; --model-revision &quot;$OPENSAST_REVISION&quot;
+          --fail-on &quot;$OPENSAST_FAIL_ON&quot;)
+        if [[ -n &quot;$OPENSAST_BASE&quot; ]]; then arguments+=(--base &quot;$OPENSAST_BASE&quot;); fi
+        if [[ -n &quot;$OPENSAST_MODEL_HOST&quot; ]]; then arguments+=(--allow-model-host &quot;$OPENSAST_MODEL_HOST&quot;); fi
+        # Source/evidence stay local. Print only status in Actions logs.
+        umask 077
+        mkdir -p &quot;$(dirname &quot;$OPENSAST_OUTPUT&quot;)&quot;
+        set +e
+        &quot;$OPENSAST_EXECUTABLE&quot; &quot;${arguments[@]}&quot; &gt; &quot;$OPENSAST_OUTPUT.console.log&quot; 2&gt;&amp;1
+        status=$?
+        set -e
+        printf &#x27;report=%s\nexit-code=%s\n&#x27; &quot;$OPENSAST_OUTPUT&quot; &quot;$status&quot; &gt;&gt; &quot;$GITHUB_OUTPUT&quot;
+        printf &#x27;OpenSAST completed with exit code %s. Detailed report remains on the company runner.\n&#x27; &quot;$status&quot;
+        exit &quot;$status&quot;</code></pre><button type="button" data-copy-code hidden>Copy</button></div></section><div class="docs-pager"><a href="docs-ci-reference.html"><span>Previous guide</span>CI details </a></div></article></div></main><footer><div class="wrap footer-inner"><div><strong>OpenSAST</strong> · AI-assisted Python security research<br>Frozen research implementation · Documentation updated 2026-10-16</div><div class="footer-links"><a href="resources.html">Research resources</a><a href="index.html#team">Team &amp; supervisors</a><a href="evaluation.html#limits">Limitations</a></div></div></footer></body></html>
