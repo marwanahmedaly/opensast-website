@@ -24,9 +24,8 @@ jobs:
           persist-credentials: false
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - name: Scan with trusted OpenSAST
-        # Reviewed immutable v0.1.0 release commit.
-        # For a private OpenSAST repository, configure organization action access.
-        uses: marwanahmedaly/ai_powered_sast/.github/actions/opensast@7a90900ddf6aee9d9047b4d2d88eaa1f41b9c454
+        # Pin the action to a reviewed integration commit.
+        uses: marwanahmedaly/opensast/.github/actions/opensast@2175c1ac26fe4100d822891c4b7488df598e54a8
         with:
           executable: /opt/opensast/bin/opensast
           project-key: ${{ github.repository }}

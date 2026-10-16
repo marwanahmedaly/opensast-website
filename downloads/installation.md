@@ -1,49 +1,35 @@
-# OpenSAST guided Linux installation
+# Install OpenSAST
 
-The new 0.2.0 installation work packages the existing scanner and adds guided
-provisioning. It does not change query logic, context collection or model prompts,
-and does not establish new accuracy measurements. Historical 0.1.0 installation
-and scan evidence remain historical.
+The main repository includes the scanner, CLI, installer, dashboard, API, worker, and GitHub Action.
 
-## Current availability
+## 1. Get the integrated source
 
-The installer is implemented in this source checkout. The GitHub repository is
-currently private. The new installer must be pushed or included in a release
-before its remote download command can work. Do not treat an unpublished raw
-GitHub URL as a working public distribution endpoint. Making the repository
-public is a separate decision.
+```bash
+git clone https://github.com/marwanahmedaly/opensast.git
+cd opensast
+```
 
-From a checkout containing this implementation, the one-command installation is:
+Git and Python must already be available.
+
+## 2. Start the installer
 
 ```bash
 bash scripts/install.sh
 ```
 
-The installer creates an isolated environment, installs the CLI/dashboard and
-bundled scanner assets, and opens the setup wizard. It does not use sudo or install
-an Unsloth Python environment. The default Qwen download is a GGUF file hosted by
-Unsloth; no training framework is installed.
+The installer creates an isolated Python environment and starts the setup wizard. It does not require sudo. To use a reviewed release, select its tag or branch with `--ref RELEASE_TAG_OR_BRANCH` when installing remotely. The default `main` follows source updates and is not an immutable release pin.
 
-After these changes are published, collaborators with repository access and a
-logged-in GitHub CLI can use:
+For installation without cloning first:
 
 ```bash
-gh api repos/marwanahmedaly/ai_powered_sast/contents/scripts/install.sh -H 'Accept: application/vnd.github.raw+json' | bash
+curl -fsSLo install.sh https://raw.githubusercontent.com/marwanahmedaly/opensast/main/scripts/install.sh
+# Inspect the downloaded script before executing it.
+bash install.sh
 ```
 
-This also requires Git. The installer uses the existing GitHub CLI credentials
-for its GitHub clone. For a public source distribution, the corresponding command
-is **conditional on publication/public access**:
+Use a reviewed commit or release reference instead of `main` when pinning an installation.
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/marwanahmedaly/ai_powered_sast/main/scripts/install.sh | bash
-```
-
-An operator can instead download and inspect the script, then execute it. Use
-`--ref RELEASE_TAG_OR_BRANCH` to choose a matching source release. The default
-`main` follows published source updates and is not an immutable release pin.
-
-## Requirements and wizard
+## 3. Check requirements and complete setup
 
 Automatic provisioning targets **Linux x86-64**, Python **3.11.8+ or 3.12+**, Python
 venv, and Linux `flock`. Online source installation needs Git and access to the
@@ -77,9 +63,8 @@ The optional default Qwen model is **17,379,990,688 bytes**. Its SHA-256 is:
 cf9ea0572e8759348ef7f8cd899fbfecba5110929fc1aa620d18bb6d91e62700
 ```
 
-This matches the recorded research weights. The immutable Hugging Face source
-revision and download hashes are in `src/aisast/install/manifest.json`. New machines,
-serving builds and concurrency are not guaranteed to reproduce the thesis scores.
+The immutable Hugging Face source revision and download hashes are in
+`src/aisast/install/manifest.json`.
 The installer uses one 16,384-token model slot and a 400-token completion budget.
 The 24 GiB memory check for the default model is a provisioning heuristic, not a
 universal minimum or a guarantee of usable speed. CPU inference can be slow.
@@ -96,7 +81,7 @@ large downloads retain `.part` files and can resume. Archives are extracted with
 Python's `data` filter into staging directories. Only setup downloads tools and
 weights; scans continue to use preinstalled local assets.
 
-## After installation
+## 4. Register and scan a project
 
 ```bash
 cd /path/to/python-project
@@ -215,11 +200,6 @@ Managed service output/process records are under `OPENSAST_HOME/services`.
 Saved engine defaults are `OPENSAST_HOME/installation.json`; credentials remain in
 private client/worker directories. Logs do not record bootstrap passwords or tokens.
 Ordinary scan evidence retains its existing worker-side logging.
-
-The implementation has a built distribution artifact and source review. A complete
-fresh-machine install, model download/startup, upgrade and offline acceptance run
-have **not** yet been established for this installer. Historical 0.1.0 acceptance
-results must not be presented as tests of these new provisioning paths.
 
 ## Primary references
 

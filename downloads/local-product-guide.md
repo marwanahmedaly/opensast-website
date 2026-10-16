@@ -1,10 +1,6 @@
 # OpenSAST: local CLI and dashboard
 
-Implementation plan: [Plan 8](../plan8.md).
-
-The final [release guide](release.md) records supported installation, terminal
-exit codes and acceptance limitations. Fresh-install/cross-file/recovery evidence
-is in the [acceptance report](../reports/release-acceptance-20261009/report.md).
+These instructions describe the integrated scanner, dashboard, API, worker, and CLI in the main OpenSAST repository.
 
 Git-aware local/PR scans and the company-runner Actions integration are described
 in [GitHub Actions](github-actions.md). Use `opensast ci` for a standalone pipeline
@@ -12,7 +8,7 @@ scan; normal dashboard workers also record Git changes when a checkout has Git m
 
 ## What is implemented
 
-- A separate `opensast` CLI alongside the existing `aisast` research CLI.
+- The `opensast` product CLI and `aisast` scanner CLI.
 - A self-hosted HTTP API and browser dashboard with locally packaged assets.
 - Password login/logout/change, expiring/revocable sessions, HttpOnly browser cookies, CSRF/origin/host checks and login throttling.
 - Workspaces, admin/member/viewer membership, authorized project registration, project-scoped worker credentials.
@@ -21,9 +17,7 @@ scan; normal dashboard workers also record Git changes when a checkout has Git m
 - Immutable checkout snapshots, file hashes, import-based affected-file planning, configuration/template invalidation, exact verifier-decision caching, full-scan override and unchanged-result reuse.
 - Current stock CodeQL + current custom query profile + template companion + current ContextBuilder + VerificationPipeline. No detector/context/prompt changes for this product work.
 
-These are implemented code paths, not a security certification. User-authorized local validation on October 9 passed 45 automated regression tests and browser/CLI workflows with real CodeQL/Qwen scans on a copy of the small repository. A finding-review database insert bug was found and fixed. See the [validation report](../reports/product-validation-20261009/report.md) for exact scope, timings, and remaining limits. Validation scenarios are defined in Plan 8.
-
-## Guided installation (new 0.2.0 implementation)
+## Guided installation
 
 From a checkout containing the new installer:
 
@@ -35,20 +29,18 @@ The wizard packages the current query assets, provisions pinned CodeQL/Python
 packs, offers local GGUF or internal inference, creates the first account and
 starts the dashboard. `opensast init` can then provision and start a project
 worker from saved settings. Use `opensast doctor`, `start`, `stop` and `restart`
-for the managed installation. The new installer has not yet undergone a full
-fresh-machine acceptance run. The repository is private and remote installation
-requires the changes to be published and the user to have access.
+for the managed installation.
 
 See [the installation guide](installation.md) for requirements, hashes, offline
 installation, mirrors, upgrade/rollback behavior and publication status.
 
 ## Manual installation from the source checkout
 
-Python 3.11+ and a Linux/macOS worker host are required; the worker uses POSIX process groups and directory descriptors. Native Windows workers are not implemented. The historical 0.1.0 release required a source checkout. The new 0.2.0 wheel bundles the selected query profile/helpers/lock and prompt assets; CodeQL binaries, stock packs and model weights are provisioned separately. Manual setup below remains available.
+Python 3.11+ and a Linux/macOS worker host are required; the worker uses POSIX process groups and directory descriptors. Native Windows workers are not implemented. The package bundles the selected query profile/helpers/lock and prompt assets; CodeQL binaries, stock packs and model weights are provisioned separately. Manual setup below remains available.
 
 ```bash
-git clone https://github.com/marwanahmedaly/ai_powered_sast.git
-cd ai_powered_sast
+git clone https://github.com/marwanahmedaly/opensast.git
+cd opensast
 python3 -m venv .venv
 . .venv/bin/activate
 pip install -e ".[web]"
@@ -58,14 +50,9 @@ opensast serve
 
 Bootstrap prompts for a password; it never accepts a default password. It only works on an empty installation. Open `http://127.0.0.1:8765` in the browser. Initial accounts are provisioned on the backend machine; there is no public signup.
 
-Use the same `--data /private/path` for bootstrap and serve if customizing storage. `OPENSAST_HOME` changes the default product storage root. It defaults to `~/.local/share/opensast`, separate from repositories and research runs.
+Use the same `--data /private/path` for bootstrap and serve if customizing storage. `OPENSAST_HOME` changes the default product storage root. It defaults to `~/.local/share/opensast`, separate from registered repositories.
 
-The required guided prompt assets are bundled with the package, byte for byte from
-the evaluated VulnHunterX checkout, with their original license and provenance.
-The historical research submodule is optional for product scanning; its locally
-created pinned revision is unavailable upstream. Do not use recursive submodule
-initialization for this release's installation. Prompt-asset hashes are included
-in the verifier cache identity. Cloning the private repository requires access.
+Guided prompt assets are bundled with their third-party license and attribution. CodeQL binaries, query packs and inference weights are separate dependencies. Recursive submodule initialization is not required. Prompt-asset hashes contribute to the verifier cache identity.
 
 ## Register a checkout
 
@@ -197,11 +184,7 @@ The database uses WAL. Back up using SQLite's online backup facility or stop the
 
 Diagnostics contain source/evidence and stay local. Browser/CLI result export includes code excerpts, while detailed engine and inference wire logs are currently available on the worker host. No retention cleanup runs automatically in this first release.
 
-## Validation and next checks
-
-Local validation checked two workspaces, admin/member/viewer permissions, CLI/dashboard parity, session and CSRF controls, queued cancellation, worker lease behavior, and incremental/full-result equality on a one-file repository copy. The unchanged scan reused four decisions with zero model calls, and an edited-file scan agreed with a forced full scan. These results are not a guarantee for all repositories or company deployments. Next, validate company TLS/proxy configuration, operational recovery under real network failures, multiple workers, and performance on larger supported repositories. See the [validation report](../reports/product-validation-20261009/report.md) and detailed validation cases in Plan 8.
-
-### Private Tailscale browser access
+## Private Tailscale browser access
 
 For private Tailscale access, replace `TAILSCALE_IP` below with your scan machine’s actual Tailscale IPv4 address. Keep the API on loopback and configure your private forwarding path separately:
 
@@ -210,3 +193,30 @@ opensast serve --trusted-origin http://TAILSCALE_IP:8765
 ```
 
 This is intended for an existing private Tailscale forwarding path, including userspace networking. `--trusted-origin` adds exact Host/Origin entries; it does not itself configure networking or disable host checks. Additional plain HTTP origins are restricted to explicitly selected addresses in `100.64.0.0/10`; ordinary company/public origins use HTTPS. The operator must ensure this address is actually reached over the private tailnet. Local `127.0.0.1`/`localhost` access remains available. See [Tailscale userspace networking](https://tailscale.com/docs/concepts/userspace-networking).
+
+## Scan result pages
+
+Each completed scan has a **View results** link. It opens a dedicated `/scans/JOB_ID` page with the project name, scan metadata, verdict filter, evidence and JSON export. Use **Back to scan history** to return to the project. Saved scan URLs require the same authenticated project access as the dashboard.
+
+
+## Dashboard navigation and review
+
+### Project overview
+
+Choose a workspace and project to see the latest scan status, last completed scan, AI-flagged candidates and unresolved candidates from the latest completed report. Start with **Scan changes**. The first scan is full; subsequent changed snapshots reuse eligible verification decisions. **Full scan** bypasses reuse. Both scan buttons are disabled while a scan is queued, running or being submitted.
+
+If the worker is offline, start `opensast worker` from the registered checkout. Queued scans wait until that worker is available. The dashboard shows the real stages (queued, code analysis, AI review, completed), elapsed time, and candidate-review counts once available. It does not estimate overall completion percentages during code analysis. Failed scans keep the previous completed report and offer a retry; retries create a new job.
+
+### Scan reports
+
+Use **View results** or **View latest results** to open a dedicated report. Its leading counts are **Flagged by AI**, **Dismissed by AI**, **Needs review**, and total candidates. These labels describe model decisions, not human-confirmed ground truth. Missing evidence, unconfigured inference and execution errors remain unresolved. Timing, reuse and technical identifiers are available in an expandable details section.
+
+Search by file, CWE, rule or explanation, and filter AI decisions separately from human review states. Lists show 25 findings per page. Search, filters and page are retained in the URL when opening a finding and returning to the report.
+
+### Finding review
+
+**Review finding** opens `/scans/JOB_ID/findings/FINDING_ID`. Referenced evidence appears beside the AI explanation, with source line numbers and the reported location highlighted when present. Missing or truncated evidence is explicitly labeled.
+
+Workspace members and administrators can **Confirm finding**, **Dismiss finding**, **Reopen**, and save a review note. These actions update the existing project finding-review record; they never rewrite the AI verdict. Viewers can read the evidence and review notes but cannot change them. Review states apply to the same finding within its project, including when it appears in another scan.
+
+Use breadcrumbs or **Back to scan results** and **Back to scan history** to navigate. Previous/next finding links follow the current filters. Scan and finding URLs require authenticated access to their project.
