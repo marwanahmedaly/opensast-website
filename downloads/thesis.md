@@ -11,6 +11,9 @@ Mohamed Mahmoud Reda — 25KQSH
 **Degree:** Master’s degree  
 **Submission date:** 20 October 2026
 
+**Source code:** [https://github.com/marwanahmedaly/opensast](https://github.com/marwanahmedaly/opensast)  
+**Project website:** [https://marwanahmedaly.github.io/opensast-website/](https://marwanahmedaly.github.io/opensast-website/)
+
 <a id="abstract"></a>
 
 ## Abstract
